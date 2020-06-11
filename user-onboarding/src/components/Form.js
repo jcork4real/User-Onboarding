@@ -20,6 +20,7 @@ function Form(){
             type="text"
             name="email"
         />
+    </label>
 
     <label htmlFor="password">
         Password
@@ -40,7 +41,6 @@ function Form(){
     
   </label>
     <button>Submit</button>
-    </label>
  </form>
 }
 
