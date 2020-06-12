@@ -3,11 +3,13 @@ import * as yup from "yup";
 import axios from "axios";
 
 function Form() {
+
+// Hooks
    const [post, setPost] = useState([]);
 
-  const [serverError, setServerError] = useState("");
+   const [serverError, setServerError] = useState("");
 
-
+// Set up initial state for all inputs
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -26,7 +28,7 @@ function Form() {
     terms: ""
   });
 
- 
+//  Setting up our schema
   const formSchema = yup.object().shape({
     name: yup.string().required("Name is a required field"), 
     email: yup
@@ -41,7 +43,8 @@ function Form() {
     terms: yup.boolean().oneOf([true])
   });
 
-  
+/* Each time the form value state is updated, check to see if it is valid per our schema. 
+  This will allow us to enable/disable the submit button.*/
   useEffect(() => {
     console.log(
       "checking to see if all values in form state follows the rules set in formSchema"
@@ -53,10 +56,11 @@ function Form() {
   }, [formState]);
 
  
+  // Then set up an axios call inside a formSubmit function we will pass to our form.
   const formSubmit = e => {
     e.preventDefault(); 
 
-    
+    // using reqres.in to simulate a real POST request to a server
     axios
       .post("https://reqres.in/api/users", formState)
       .then(res => {
@@ -81,6 +85,9 @@ function Form() {
       });
   };
 
+
+
+  // Adding Validation to inputs with conditional rendering
  
   const validateChange = e => {
     
@@ -103,8 +110,13 @@ function Form() {
       });
   };
 
+
+  // Setup inputChange function to handle multiple inputs
   
   const inputChange = e => {
+
+    /* e.persist allows us to use the synthetic event in an async manner (inside of validateChange fn).
+    We need to be able to use it after the form validation */
     
     e.persist(); 
     console.log("input changed!", e.target.value);
@@ -120,6 +132,9 @@ function Form() {
     setFormState(newFormData); 
   };
 
+
+  // Form inputs
+
   return (
     <form onSubmit={formSubmit}>
       {serverError ? <p className="error">{serverError}</p> : null}
@@ -129,7 +144,6 @@ function Form() {
           id="name"
           type="text"
           name="name"
-          // data-cy="name"
           onChange={inputChange}
           value={formState.name}
         />
@@ -178,9 +192,10 @@ function Form() {
           <p className="error">{errors.terms}</p>
         ) : null}
       </label>
-      <button type="submit" data-cy="submit" disabled={buttonDisabled}>
+      <button type="submit" disabled={buttonDisabled}>
         Submit
       </button>
+      {/* Displaying data to the DOM */}
       <pre>{JSON.stringify(post, null, 2)}</pre>
     </form>
   );
