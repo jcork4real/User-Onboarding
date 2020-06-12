@@ -129,7 +129,7 @@ function Form() {
           id="name"
           type="text"
           name="name"
-          data-cy="name"
+          // data-cy="name"
           onChange={inputChange}
           value={formState.name}
         />
@@ -141,7 +141,6 @@ function Form() {
           id="email"
           type="text"
           name="email"
-          data-cy="email"
           onChange={inputChange}
           value={formState.email}
         />
@@ -155,7 +154,6 @@ function Form() {
         <input
           type="password"
           name="password"
-          data-cy="password"
           id="password"
           placeholder="Please enter your password"
           value={formState.password}
